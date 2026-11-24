@@ -1,0 +1,42 @@
+# GPT-5.6-Luna baseline, n = 50
+# Run: python GPT_Luna_Baseline.chatgpt GPT_Luna_Baseline/configs/GPT_Luna_example_config.yaml
+
+dataset:
+  # Test instances are sampled from this file.
+  test_csv: ./example_dataset/n50/test/evrp_example_test_dataset.csv
+
+llm_baseline:
+  model: gpt-5.6-luna
+  # Number of test instances to solve (capped by the number in test_csv).
+  # The paper used 100 instances sampled from the full test set.
+  n_instances: 100
+  # Controls which instances are sampled (and which become saved examples).
+  seed: 42
+  # Number of instances for which the full prompt/response and route plots are saved.
+  save_prompt_examples: 3
+  reasoning_effort: low
+  result_dir: ./chatgpt_results/n50
+
+# Same EVRPTW setting as the RL experiments of this size. Used to fill the
+# system prompt, to simulate the returned routes (service rate, distance,
+# battery, time windows) and to draw the example route figures.
+env:
+  class_path: env.EVRP.EVRPEnv
+  mask_function_path: env.mask_function.mask_function
+  reward_function_path: env.reward_function.reward_function
+
+  battery_max: 60.0
+  charged_battery_max: 48
+  n_vehicles: 2
+  max_steps: 100
+  station_allow_battery_ratio: 0.5
+  distance_weight: 1.0
+  charging_rate: 1.0
+  energy_rate: 1.0
+  speed: 60
+  operating_time_min: 240
+  operating_time_max: 1000
+  time_windows:
+    - [240, 480]
+    - [420, 660]
+    - [600, 900]

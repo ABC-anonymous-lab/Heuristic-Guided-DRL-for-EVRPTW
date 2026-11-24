@@ -1,0 +1,52 @@
+# OR-Tools baseline, example config (n = 50)
+# Run: python OR_Tools_baseline/run_evrp_ortools.py --config OR_Tools_baseline/configs/OR_Tools_example_config.yaml
+#
+# For another instance size, copy the 'env' section from that size's RL config
+# (DRL_results/.../config.yaml) and point 'ortools.data_path' to its test file.
+
+# Same EVRPTW setting as the RL experiments of this size. Used to set up the
+# solver (battery, vehicles, charging target, speed) and to draw route figures.
+env:
+  class_path: env.EVRP.EVRPEnv
+  mask_function_path: env.mask_function.mask_function
+  reward_function_path: env.reward_function.reward_function
+
+  battery_max: 60.0
+  charged_battery_max: 48
+  n_vehicles: 2
+  max_steps: 100
+  station_allow_battery_ratio: 0.5
+  distance_weight: 1.0
+  charging_rate: 1.0
+  energy_rate: 1.0
+  speed: 60
+  operating_time_min: 240
+  operating_time_max: 1000
+  time_windows:
+    - [240, 480]
+    - [420, 660]
+    - [600, 900]
+
+ortools:
+  # Vehicles, battery, charge-to level, speed, energy and charging rates are taken
+  # from the env section above.
+  battery_level_step: 3        # discretized battery levels: range(0, battery_max, step)
+
+  # Objective
+  balance_coefficient: 0       # > 0 penalizes the longest route (balances vehicles)
+  vehicle_fixed_cost: 0        # > 0 adds a fixed cost per used vehicle
+
+  # Search budget
+  time_limit_sec: 10           # per instance; a few instances may not converge within the limit, so their result can differ slightly between runs
+
+  n_workers: 4                 # instances solved in parallel (one process each)
+
+  # Instance selection, priority: graph_ids > sample_n > all
+  graph_ids: null
+  sample_n: 100                # instances sampled at random (capped by the number in the file)
+  seed: 42                     # controls the sampling
+  sample_n_for_plot: 3         # route figures are drawn for the first 3 instances
+
+  # output 
+  data_path: ./example_dataset/n50/test/evrp_example_test_dataset.csv
+  results_dir: ./OR_Tools_baseline/results/n50

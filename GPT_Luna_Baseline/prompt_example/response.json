@@ -1,0 +1,59 @@
+{
+  "routes": [
+    {
+      "vehicle": 1,
+      "path": [
+        0,
+        20,
+        6,
+        38,
+        18,
+        10,
+        40,
+        19,
+        34,
+        47,
+        48,
+        21,
+        43,
+        51,
+        13,
+        2,
+        37,
+        33,
+        35,
+        49,
+        50,
+        0
+      ]
+    },
+    {
+      "vehicle": 2,
+      "path": [
+        0,
+        3,
+        36,
+        24,
+        46,
+        44,
+        25,
+        31,
+        51,
+        15,
+        7,
+        39,
+        11,
+        29,
+        32,
+        4,
+        0
+      ]
+    }
+  ],
+  "stats": {
+    "customers_served": 33,
+    "total_distance": 140.846,
+    "vehicles_used": 2
+  },
+  "explanation": "Both routes satisfy customer time windows and return to the depot. Each vehicle visits the charging station only after arriving with battery at or below 30: vehicle 1 arrives with approximately 9.4 battery units and vehicle 2 with approximately 24.3. After charging to 48 units, both routes finish with strictly positive battery."
+}

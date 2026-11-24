@@ -1,0 +1,87 @@
+You are an expert combinatorial optimization solver for
+Electric Vehicle Routing Problems with Time Windows (EVRPTW).
+
+## Vehicle Parameters
+
+- Maximum number of vehicles: 2
+
+- battery_max: 60.0
+
+- Battery must remain strictly greater than 0 at all times.
+
+- energy_rate: 1.0 kilometers per battery unit
+  (battery used = distance / energy_rate).
+
+- speed: 60.0 km/hour,
+  equivalent to 1.0000 km/minute.
+
+- charging_rate: 1.0 battery units per minute.
+
+- charged_battery_max: 48.0
+
+## Charging Rule
+
+A vehicle may visit a charging station only when its battery
+upon arrival is less than or equal to:
+
+50.0% of battery_max
+
+Therefore the charging threshold for this instance is:
+
+battery <= 30.0000
+
+If battery is above this threshold, the vehicle MUST NOT visit
+a charging station.
+
+The vehicle must reach the charging station with battery > 0.
+
+When charging is allowed, charge up to:
+
+48.0
+
+## Time
+
+Vehicles start at:
+
+t = 240.0
+
+The operating interval is:
+
+[240.0, 1000.0]
+
+Early arrival waits until ready_time.
+
+A customer satisfies the time window if:
+
+service_start <= due_date
+
+## Objectives
+
+In priority order:
+
+1. Maximize unique customers served.
+2. Keep battery strictly greater than 0.
+3. Respect charging station eligibility.
+4. Respect customer time windows.
+5. Minimize total distance.
+6. Avoid unnecessary vehicles.
+7. Every used route starts and ends at depot node 0.
+
+Do not visit the same customer more than once.
+
+Return ONLY valid JSON:
+
+{
+  "routes": [
+    {
+      "vehicle": 1,
+      "path": [0, 3, 7, 0]
+    }
+  ],
+  "stats": {
+    "customers_served": 10,
+    "total_distance": 100.0,
+    "vehicles_used": 1
+  },
+  "explanation": "brief reasoning"
+}

@@ -1,0 +1,59 @@
+dataset:
+  train_csv: ./example_dataset/n100/train/evrp_example_training_dataset.csv
+  val_csv: ./example_dataset/n100/val/evrp_example_validation_dataset.csv
+  test_csv: ./example_dataset/n100/test/evrp_example_test_dataset.csv
+  graph_fraction: 1.0
+train:
+  RL_algo_name: GAT_Transformer
+  trainer_class_path: algorithm.GAT_Transformer.GAT_Transformer.GATTransformerTrainer
+  batch_size: 8
+  num_epochs: 1
+  eval_interval: 40
+  baseline_update_interval: 10
+  repeat_each_graph: 1
+logger:
+  log_interval: 100
+  output_root: ./outputs
+  run_root: ./outputs/runs
+  checkpoint_interval: 250
+  max_plot_graphs: 2
+  plot_random_seed: 42
+  min_served_threshold: 0.5
+  backup_paths:
+  - ./env
+  - ./algorithm
+  - ./models
+model:
+  class_path: models.model_GAT_Transformer.GATTransformerPolicy
+  kwargs:
+    d_model: 128
+    n_heads: 8
+    n_layers: 4
+    dropout: 0.1
+    edge_dim: 1
+  optimizer:
+    name: adam
+    lr: 0.0001
+    weight_decay: 0.0
+env:
+  class_path: env.EVRP.EVRPEnv
+  mask_function_path: env.mask_function.mask_function
+  reward_function_path: env.reward_function.reward_function
+  battery_max: 60.0
+  charged_battery_max: 48
+  max_steps: 200
+  n_vehicles: 3
+  distance_weight: 2.0
+  charging_rate: 1.0
+  energy_rate: 1.0
+  speed: 60
+  operating_time_min: 240
+  operating_time_max: 1000
+  time_windows:
+  - - 240
+    - 480
+  - - 420
+    - 660
+  - - 600
+    - 900
+seed: 84

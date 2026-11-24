@@ -1,0 +1,33 @@
+name: HG_DRL_EVRPTW
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+  - pip
+
+  - ortools-python=9.6
+  - coin-or-cbc
+
+  - numpy=1.26.4
+  - pandas
+  - pyarrow
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - tensorboard
+  - tqdm
+  - psutil
+  - pyyaml
+  - openai
+  - python-dotenv
+  - tiktoken
+
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu128
+      - torch==2.11.0
+      - torchvision==0.26.0
+      - torchaudio==2.11.0
+      - torch-geometric==2.6.1

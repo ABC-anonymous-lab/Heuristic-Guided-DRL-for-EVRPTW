@@ -1,0 +1,57 @@
+# Example config for gen_dataset.py: 10000 instances with 200 customers and
+# 5 time windows (the setting of the n200 dataset in the paper).
+#
+# Run from the repository root:
+#   python synthetic_dataset_generation/gen_dataset.py synthetic_dataset_generation/dataset_config_example.yaml
+#
+# Relative paths below are resolved against the folder of this config file.
+#
+# For the n50 / n100 settings of the paper set
+#   customer_counts: [50]   or [100]
+#   time_window_selection: [wide]
+
+# Raw customer locations (graph_id, node_id, x, y in the unit square), one CSV
+# per size, written by the R script and read by gen_dataset.py.
+raw_dir: ./raw_gen_dataset
+# Final datasets; with make_split the train/val/test files go to
+# train_data/, val_data/ and test_data/ below this folder.
+output_dir: ./generated_dataset
+
+# Generate the raw locations with R (needs R and the tspgen package).
+run_r: true
+rscript_path: Rscript
+r_script: gen_raw_data.R
+n_graphs: 10000
+r_iters: 50
+r_seed: 42
+# If a raw file already exists: skip | regenerate | ask
+on_raw_exists: skip
+
+# Problem sizes to generate
+customer_counts: [200]
+
+# Charging stations and coordinate scale (km) per size
+size_params:
+  50:  {num_stations: 1, scale_km: 15.0}
+  100: {num_stations: 2, scale_km: 20.0}
+  200: {num_stations: 4, scale_km: 20.0}
+
+# Time-window sets (minutes); n50 / n100 use wide, n200 uses narrow
+time_window_variants:
+  narrow: [[240, 480], [420, 660], [600, 900], [840, 1080], [1020, 1320]]
+  wide:   [[240, 480], [420, 660], [600, 900]]
+time_window_selection: [narrow]
+
+customer_service_time: 3   # minutes
+tw_seed: 42
+kmeans_seed: 0
+time_norm_min: null   # null: earliest start of the selected time windows
+time_norm_max: null   # null: latest end of the selected time windows
+
+make_split: true
+split: {val_ratio: 0.1, test_ratio: 0.1, seed: 42}   # 8000 / 1000 / 1000
+
+output_format: parquet   # csv or parquet
+
+# Output file name without extension; {p} = number of time windows
+out_name_template: "tw_{raw_stem}_{p}p"

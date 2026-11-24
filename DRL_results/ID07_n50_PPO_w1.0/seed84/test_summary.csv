@@ -1,0 +1,2 @@
+reward,len,served_count,in_time_window_ratio,positive_battery_ratio,total_distance,total_distance_min,total_distance_max,total_distance_mean,num_vehicles_min,num_vehicles_max,num_vehicles_mean,vehicle_distance_std_min,vehicle_distance_std_max,vehicle_distance_std_mean,vehicle_distance_mean_min,vehicle_distance_mean_max,vehicle_distance_mean_mean
+66.00072374983334,56.35,0.9998,1.0,1.0,217.96486617316336,148.99045208096504,276.555728584528,217.96486617316336,1.0,2.0,1.84,0.0,119.7088851928711,65.70276564280192,79.46189880371094,246.67724609375,124.93595240275066
